@@ -4,7 +4,7 @@ import com.vadzim.yeumushkou.data.bd.entity.CurrencyEntity
 import com.vadzim.yeumushkou.data.dto.ExchangeRatesResponse
 import com.vadzim.yeumushkou.domain.model.Currency
 import com.vadzim.yeumushkou.domain.model.ExchangeRates
-import com.vadzim.yeumushkou.domain.model.FavoriteExchangeRate
+import com.vadzim.yeumushkou.domain.model.FavoriteCurrency
 import com.vadzim.yeumushkou.domain.model.Rate
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -22,12 +22,12 @@ internal fun ExchangeRatesResponse.map(): ExchangeRates {
     )
 }
 
-internal fun Flow<List<CurrencyEntity>>.map(): Flow<List<FavoriteExchangeRate>> = map { it.map() }
+internal fun Flow<List<CurrencyEntity>>.map(): Flow<List<FavoriteCurrency>> = map { it.map() }
 
-internal fun List<CurrencyEntity>.map(): List<FavoriteExchangeRate> = map { it.map() }
+internal fun List<CurrencyEntity>.map(): List<FavoriteCurrency> = map { it.map() }
 
-internal fun CurrencyEntity.map(): FavoriteExchangeRate {
-    return FavoriteExchangeRate(
+internal fun CurrencyEntity.map(): FavoriteCurrency {
+    return FavoriteCurrency(
         id = id,
         baseCurrency = baseCurrency,
         relatedCurrency = relatedCurrency,

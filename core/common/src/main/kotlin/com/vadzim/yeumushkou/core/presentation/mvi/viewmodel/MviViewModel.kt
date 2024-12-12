@@ -6,10 +6,12 @@ import com.vadzim.yeumushkou.core.presentation.mvi.SideEffect
 import com.vadzim.yeumushkou.core.presentation.mvi.UiCommand
 import com.vadzim.yeumushkou.core.presentation.mvi.UiEvent
 import com.vadzim.yeumushkou.core.presentation.mvi.reducer.Reducer
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -19,7 +21,7 @@ abstract class MviViewModel<UiState : com.vadzim.yeumushkou.core.presentation.mv
 ) : ViewModel() {
 
     val stateFlow: StateFlow<UiState> get() = mutableStateFlow.asStateFlow()
-    protected abstract val mutableStateFlow: MutableStateFlow<UiState>
+    private val mutableStateFlow: MutableStateFlow<UiState> = MutableStateFlow(reducer.initialState())
 
     private val state: UiState get() = mutableStateFlow.value
 
@@ -27,11 +29,13 @@ abstract class MviViewModel<UiState : com.vadzim.yeumushkou.core.presentation.mv
         reducer.sideEffectHandler
             .getEventSource()
             .onEach(::interact)
+            .flowOn(Dispatchers.IO)
             .launchIn(viewModelScope)
 
         reducer.sideEffectHandler
             .getCommandSource()
             .onEach(::handleUiCommand)
+            .flowOn(Dispatchers.Main.immediate)
             .launchIn(viewModelScope)
 
         viewModelScope.launch {
@@ -55,4 +59,5 @@ abstract class MviViewModel<UiState : com.vadzim.yeumushkou.core.presentation.mv
             updateState(reducer.reduce(state, event))
         }
     }
+
 }

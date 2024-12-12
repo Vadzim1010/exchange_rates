@@ -1,5 +1,6 @@
 package com.vadzim.yeumushkou.navigation.navigator
 
+import com.vadzim.yeumushkou.main.R
 import com.vadzim.yeumushkou.main.root.router.MainRouter
 import com.vadzim.yeumushkou.navigation.NavControllerManager
 import javax.inject.Inject
@@ -9,11 +10,11 @@ internal class MainRouterImpl @Inject constructor(
 ) : MainRouter {
 
     override fun goCurrencies() {
-//        navControllerManager.featureNavController.navigate(com.vadzim.yeumushkou.main.R.id.action_testFragment11_to_testFragment1)
+        navControllerManager.featureNavController.navigate(R.id.action_favoritesFragment_to_currenciesFragment)
     }
 
     override fun goFavorites() {
-//        navControllerManager.featureNavController.navigate(com.vadzim.yeumushkou.main.R.id.action_testFragment1_to_testFragment11)
+        navControllerManager.featureNavController.navigate(R.id.action_currenciesFragment_to_favoritesFragment)
     }
 
 }

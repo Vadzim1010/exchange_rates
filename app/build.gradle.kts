@@ -30,6 +30,7 @@ dependencies {
 
     implementation(project(":feature:main:root"))
     implementation(project(":feature:main:currancies"))
+    implementation(project(":feature:main:favorite"))
     implementation(project(":data"))
     implementation(project(":domain"))
 }

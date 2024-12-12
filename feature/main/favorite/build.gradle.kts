@@ -7,7 +7,7 @@ plugins {
 apply<LibraryGradlePlugin>()
 
 android {
-    namespace = "com.vadzim.yeumushkou.main"
+    namespace = "com.vadzim.yeumushkou.favorite"
 
     buildFeatures {
         compose = true
@@ -26,7 +26,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation( libs.androidx.material)
+    implementation(libs.androidx.material)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -37,6 +37,7 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
 
     implementation(libs.dagger)
+    implementation(project(":domain"))
     kapt(libs.dagger.compiler)
 
     implementation(libs.retrofit)
@@ -47,6 +48,4 @@ dependencies {
     implementation(libs.jjwt.impl)
 
     implementation(project(":core:common"))
-    implementation(project(":feature:main:currancies"))
-    implementation(project(":feature:main:favorite"))
 }

@@ -6,6 +6,7 @@ import com.vadzim.yeumushkou.core.presentation.navigation.CommonRouter
 import com.vadzim.yeumushkou.domain.repository.api.ExchangeRatesLocalRepository
 import com.vadzim.yeumushkou.domain.repository.api.ExchangeRatesRemoteRepository
 import com.vadzim.yeumushkou.domain.usecase.GetExchangeRatesUseCase
+import com.vadzim.yeumushkou.domain.usecase.UpdateFavoritesUseCase
 
 interface CurrenciesDependencies : ComponentDependencies {
 
@@ -14,4 +15,5 @@ interface CurrenciesDependencies : ComponentDependencies {
     val exchangeRatesLocalRepository: ExchangeRatesLocalRepository
     val commonRouter: CommonRouter
     val getExchangeRatesUseCase: GetExchangeRatesUseCase
+    val updateFavoritesUseCase: UpdateFavoritesUseCase
 }

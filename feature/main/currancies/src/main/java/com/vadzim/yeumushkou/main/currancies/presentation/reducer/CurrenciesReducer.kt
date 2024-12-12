@@ -75,7 +75,7 @@ internal class CurrenciesReducer @Inject constructor(
             )
         )
         val items = state.rates.map { rate ->
-            rate.copy(isFavorite = !rate.isFavorite).takeIf { it.currency == event.relatedCurrency } ?: rate
+            rate.copy(isFavorite = !rate.isFavorite).takeIf { it.baseCurrency == event.relatedCurrency } ?: rate
         }
 
         return state.copy(rates = items)

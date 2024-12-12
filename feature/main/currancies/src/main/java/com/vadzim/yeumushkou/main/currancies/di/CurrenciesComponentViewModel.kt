@@ -11,4 +11,5 @@ internal class CurrenciesComponentViewModel(application: Application) : AndroidV
             dependencies = application.findComponentDependencies()
         )
     }
+
 }

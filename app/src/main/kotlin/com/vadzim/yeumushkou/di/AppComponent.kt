@@ -4,6 +4,7 @@ import android.content.Context
 import com.vadzim.yeumushkou.MainActivity
 import com.vadzim.yeumushkou.core.di.AppScope
 import com.vadzim.yeumushkou.core.di.deps.ComponentDependenciesProvider
+import com.vadzim.yeumushkou.favorite.di.FavoritesDependencies
 import com.vadzim.yeumushkou.main.currancies.di.CurrenciesDependencies
 import com.vadzim.yeumushkou.main.root.di.MainDependencies
 import dagger.BindsInstance
@@ -13,7 +14,8 @@ import dagger.Component
 @Component(modules = [AppModule::class])
 internal interface AppComponent :
     MainDependencies,
-    CurrenciesDependencies {
+    CurrenciesDependencies,
+    FavoritesDependencies {
 
     val dependencies: ComponentDependenciesProvider
 
