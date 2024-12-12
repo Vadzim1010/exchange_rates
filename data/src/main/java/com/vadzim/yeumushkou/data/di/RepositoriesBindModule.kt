@@ -1,6 +1,8 @@
 package com.vadzim.yeumushkou.data.di
 
+import com.vadzim.yeumushkou.data.repository.ExchangeRatesLocalRepositoryImpl
 import com.vadzim.yeumushkou.data.repository.ExchangeRatesRemoteRepositoryImpl
+import com.vadzim.yeumushkou.domain.repository.api.ExchangeRatesLocalRepository
 import com.vadzim.yeumushkou.domain.repository.api.ExchangeRatesRemoteRepository
 import dagger.Binds
 import dagger.Module
@@ -9,5 +11,9 @@ import dagger.Module
 internal interface RepositoriesBindModule {
 
     @Binds
-    fun bindAuthorizationRepository(apiService: ExchangeRatesRemoteRepositoryImpl): ExchangeRatesRemoteRepository
+    fun bindExchangeRatesRemoteRepository(repository: ExchangeRatesRemoteRepositoryImpl): ExchangeRatesRemoteRepository
+
+    @Binds
+    fun bindExchangeRatesLocalRepository(repository: ExchangeRatesLocalRepositoryImpl): ExchangeRatesLocalRepository
+
 }

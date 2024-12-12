@@ -1,43 +1,51 @@
 package com.vadzim.yeumushkou.main.currancies.presentation.handler
 
 import com.vadzim.yeumushkou.core.presentation.mvi.reducer.SideEffectHandler
-import com.vadzim.yeumushkou.domain.repository.api.ExchangeRatesRemoteRepository
-import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiCommand
-import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiEvent
+import com.vadzim.yeumushkou.domain.repository.api.ExchangeRatesLocalRepository
+import com.vadzim.yeumushkou.domain.usecase.GetExchangeRatesUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesSideEffect as SideEffect
+import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiCommand as Command
+import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiEvent as Event
 
 internal class CurrenciesSideEffectHandler @Inject constructor(
-    private val repository: ExchangeRatesRemoteRepository
-) : SideEffectHandler<CurrenciesUiEvent.Domain, CurrenciesUiCommand, SideEffect>() {
+    private val localRepository: ExchangeRatesLocalRepository,
+    private val getExchangeRatesUseCase: GetExchangeRatesUseCase,
+) : SideEffectHandler<Event.Domain, Command, SideEffect>() {
 
-    override fun handleDomainSideEffect(sideEffect: SideEffect): Flow<CurrenciesUiEvent.Domain> {
+    override suspend fun handleDomainSideEffect(sideEffect: SideEffect): Flow<Event.Domain> {
         return when (sideEffect) {
             is SideEffect.Domain.LoadExchangeRates -> handleLoadExchangeRates(sideEffect)
+            is SideEffect.Domain.UpdateFavorites -> handUpdateFavorites(sideEffect)
             else -> error("Not implemented")
         }
     }
 
-    override fun handleUiSideEffect(sideEffect: SideEffect): CurrenciesUiCommand {
+    override suspend fun handleUiSideEffect(sideEffect: SideEffect): Command {
         return when (sideEffect) {
-            is SideEffect.Ui.ShowErrorDialog -> CurrenciesUiCommand.ShowErrorDialog
+            is SideEffect.Ui.ShowErrorDialog -> Command.ShowErrorDialog
             else -> error("Not implemented")
         }
     }
 
-    private fun handleLoadExchangeRates(sideEffect: SideEffect.Domain.LoadExchangeRates): Flow<CurrenciesUiEvent.Domain> {
-        return flow {
-            repository.getLatestExchangeRates(
-                baseCurrency = sideEffect.baseCurrency,
-                conversionCurrencies = sideEffect.conversionCurrencies,
-            ).also { result -> emit(result) }
-        }
-            .map(CurrenciesUiEvent.Domain::ExchangeRatesLoaded)
+    private suspend fun handleLoadExchangeRates(sideEffect: SideEffect.Domain.LoadExchangeRates): Flow<Event.Domain> {
+        return getExchangeRatesUseCase(sideEffect.baseCurrency, sideEffect.conversionCurrencies)
+            .map(Event.Domain::ExchangeRatesLoaded)
             .flowOn(Dispatchers.IO)
+    }
+
+    private suspend fun handUpdateFavorites(sideEffect: SideEffect.Domain.UpdateFavorites): Flow<Event.Domain> {
+        if (sideEffect.isFavorite) {
+            localRepository.deleteExchangeRate(sideEffect.baseCurrency, sideEffect.relatedCurrency)
+        } else {
+            localRepository.insertExchangeRate(sideEffect.baseCurrency, sideEffect.relatedCurrency)
+        }
+
+        return emptyFlow()
     }
 }

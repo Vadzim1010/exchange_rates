@@ -11,6 +11,12 @@ internal sealed interface CurrenciesSideEffect : SideEffect {
             val baseCurrency: Currency,
             val conversionCurrencies: List<Currency>,
         ) : Domain
+
+        data class UpdateFavorites(
+            val baseCurrency: String,
+            val relatedCurrency: String,
+            val isFavorite: Boolean,
+        ) : Domain
     }
 
     sealed interface Ui : CurrenciesSideEffect {

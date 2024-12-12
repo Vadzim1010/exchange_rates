@@ -25,6 +25,7 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
@@ -55,8 +56,9 @@ import com.vadzim.yeumushkou.core.presentation.ui.Primary
 import com.vadzim.yeumushkou.core.presentation.ui.Secondary
 import com.vadzim.yeumushkou.core.presentation.ui.TextDefault
 import com.vadzim.yeumushkou.core.presentation.ui.Yellow
-import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiState
+import com.vadzim.yeumushkou.domain.model.Currency
 import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiEvent
+import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiState
 import com.vadzim.yeumushkou.main.currancies.presentation.viewmodel.CurrenciesViewModel
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
@@ -114,16 +116,15 @@ internal fun CurrenciesContent(
                     .background(BgHeader)
                     .padding(bottom = 8.dp)
             ) {
-
-
-                // Dropdown for currency selection
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+
                     var expanded by remember { mutableStateOf(false) }
+
                     ExposedDropdownMenuBox(
                         expanded = expanded,
                         onExpandedChange = { expanded = !expanded },
@@ -148,24 +149,26 @@ internal fun CurrenciesContent(
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                             shape = RoundedCornerShape(8.dp),
                             modifier = Modifier
-                                .menuAnchor()
+                                .menuAnchor(MenuAnchorType.PrimaryEditable, true)
                                 .fillMaxWidth()
 
                         )
+
                         ExposedDropdownMenu(
                             expanded = expanded,
                             onDismissRequest = { expanded = false },
                             modifier = Modifier
-                                .fillMaxWidth()
                                 .background(BgDefault),
                         ) {
-                            rates.value.forEach { rate ->
-                                DropdownMenuItem(
-                                    text = { Text(rate.currency) },
-                                    onClick = { eventListener(CurrenciesUiEvent.UI.OnSelectCurrency(rate.currency)) },
-                                    modifier = Modifier.fillMaxWidth()
-                                )
-                            }
+                            Currency.entries
+                                .map { it.name }
+                                .forEach { rate ->
+                                    DropdownMenuItem(
+                                        text = { Text(rate) },
+                                        onClick = { eventListener(CurrenciesUiEvent.UI.OnSelectCurrency(rate)) },
+                                        modifier = Modifier.fillMaxWidth()
+                                    )
+                                }
                         }
                     }
 
@@ -194,7 +197,15 @@ internal fun CurrenciesContent(
                     .padding(vertical = 8.dp, horizontal = 16.dp)
             ) {
                 rates.value.forEach { rate ->
-                    CurrencyItem(rate = rate)
+                    CurrencyItem(rate = rate) { isFavorite, relatedCurrency ->
+                        eventListener(
+                            CurrenciesUiEvent.UI.OnStarClick(
+                                baseCurrency = selectedCurrency.value,
+                                relatedCurrency = relatedCurrency,
+                                isFavorite = isFavorite,
+                            )
+                        )
+                    }
                 }
             }
         }
@@ -203,7 +214,10 @@ internal fun CurrenciesContent(
 
 @SuppressLint("DefaultLocale")
 @Composable
-internal fun CurrencyItem(rate: CurrenciesUiState.Rate) {
+internal fun CurrencyItem(
+    rate: CurrenciesUiState.Rate,
+    onStarClick: (isFavorite: Boolean, currency: String) -> Unit,
+) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -226,13 +240,13 @@ internal fun CurrencyItem(rate: CurrenciesUiState.Rate) {
                 modifier = Modifier.weight(1f)
             )
             Text(
-                text = String.format("%.6f", rate.rate),
+                text = String.format("%.6f", rate.value),
                 fontWeight = FontWeight.Bold,
                 color = TextDefault,
                 fontSize = 16.sp
             )
             Spacer(modifier = Modifier.width(8.dp))
-            IconButton(onClick = { /* Handle favorite toggle */ }) {
+            IconButton(onClick = { onStarClick(rate.isFavorite, rate.currency) }) {
                 Icon(
                     imageVector = if (rate.isFavorite) Icons.Filled.Star else Icons.Outlined.Star,
                     contentDescription = null,

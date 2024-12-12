@@ -6,6 +6,8 @@ import dagger.Module
     includes = [
         RepositoriesBindModule::class,
         ApiServiceModule::class,
+        UseCaseModule::class,
+        DatabaseModule::class,
     ]
 )
 interface DataLayerModule

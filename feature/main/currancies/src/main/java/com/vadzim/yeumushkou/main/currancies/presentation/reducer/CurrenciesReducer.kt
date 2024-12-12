@@ -3,9 +3,9 @@ package com.vadzim.yeumushkou.main.currancies.presentation.reducer
 import com.vadzim.yeumushkou.core.presentation.mvi.reducer.Reducer
 import com.vadzim.yeumushkou.domain.model.Currency
 import com.vadzim.yeumushkou.main.currancies.presentation.handler.CurrenciesSideEffectHandler
+import com.vadzim.yeumushkou.main.currancies.presentation.mapper.map
 import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiEvent
 import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiState
-import com.vadzim.yeumushkou.main.currancies.presentation.ui.map
 import javax.inject.Inject
 import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesSideEffect as SideEffect
 import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiCommand as Command
@@ -21,6 +21,7 @@ internal class CurrenciesReducer @Inject constructor(
             is Event.UI.InitForm -> reduceInitForm(state)
             is Event.Domain.ExchangeRatesLoaded -> reduceExchangeRatesLoaded(event, state)
             is Event.UI.OnSelectCurrency -> reduceOnSelectCurrency(event, state)
+            is Event.UI.OnStarClick -> reduceOnStarClick(event, state)
         }
     }
 
@@ -64,4 +65,20 @@ internal class CurrenciesReducer @Inject constructor(
         )
         return state.copy(base = event.currency)
     }
+
+    private suspend fun reduceOnStarClick(event: Event.UI.OnStarClick, state: State): State {
+        sideEffectHandler.onDomainSideEffect(
+            SideEffect.Domain.UpdateFavorites(
+                baseCurrency = event.baseCurrency,
+                relatedCurrency = event.relatedCurrency,
+                isFavorite = event.isFavorite,
+            )
+        )
+        val items = state.rates.map { rate ->
+            rate.copy(isFavorite = !rate.isFavorite).takeIf { it.currency == event.relatedCurrency } ?: rate
+        }
+
+        return state.copy(rates = items)
+    }
+
 }

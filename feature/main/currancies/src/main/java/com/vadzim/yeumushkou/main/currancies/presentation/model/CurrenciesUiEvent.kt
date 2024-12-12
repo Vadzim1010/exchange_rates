@@ -10,6 +10,12 @@ internal sealed interface CurrenciesUiEvent : UiEvent {
         data object InitForm : UI
 
         data class OnSelectCurrency(val currency: String) : UI
+
+        data class OnStarClick(
+            val baseCurrency: String,
+            val relatedCurrency: String,
+            val isFavorite: Boolean,
+        ) : UI
     }
 
     sealed interface Domain : CurrenciesUiEvent {

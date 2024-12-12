@@ -2,5 +2,5 @@ package com.vadzim.yeumushkou.domain.model
 
 data class ExchangeRates(
     val baseCurrency: Currency,
-    val rates: Map<Currency, Double>,
+    val rates: List<Rate>,
 )

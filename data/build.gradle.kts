@@ -8,6 +8,10 @@ apply<LibraryGradlePlugin>()
 
 android {
     namespace = "com.vadzim.yeumushkou.data"
+
+    kapt {
+        arguments {arg("room.schemaLocation", "$projectDir/schemas")}
+    }
 }
 
 dependencies {
@@ -21,6 +25,9 @@ dependencies {
 
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
+
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.runtime)
 
     implementation(project(":domain"))
     implementation(project(":core:common"))

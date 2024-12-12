@@ -37,7 +37,8 @@ abstract class SideEffectHandler<out Event : UiEvent, out Command : UiCommand, i
         uiSideEffectFlow.emit(sideEffect)
     }
 
-    protected abstract fun handleDomainSideEffect(sideEffect: Effect): Flow<Event>
+    protected abstract suspend fun handleDomainSideEffect(sideEffect: Effect): Flow<Event>
 
-    protected abstract fun handleUiSideEffect(sideEffect: Effect): Command
+    protected abstract suspend fun handleUiSideEffect(sideEffect: Effect): Command
+
 }

@@ -12,7 +12,7 @@ internal data class CurrenciesUiState(
     @Immutable
     data class Rate(
         val currency: String,
-        val rate: Double,
+        val value: Double,
         val isFavorite: Boolean
     )
 }
