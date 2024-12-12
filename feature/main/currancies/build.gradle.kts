@@ -44,8 +44,5 @@ dependencies {
     implementation(libs.retrofit.converter)
     implementation(libs.okhttp)
 
-    implementation(libs.jjwt.api)
-    implementation(libs.jjwt.impl)
-
     implementation(project(":core:common"))
 }
