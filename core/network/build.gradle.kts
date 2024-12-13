@@ -8,6 +8,19 @@ apply<LibraryGradlePlugin>()
 
 android {
     namespace = "com.vadzim.yeumushkou.core.network"
+
+    buildTypes {
+        debug {
+            val apikey: String by project
+
+            buildConfigField("String", "API_KEY", apikey)
+        }
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
 }
 
 dependencies {

@@ -1,9 +1,11 @@
 package com.vadzim.yeumushkou.core.network.di
 
+import com.vadzim.yeumushkou.core.network.BuildConfig
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.HttpLoggingInterceptor.Level
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -12,14 +14,16 @@ class NetworkModule {
 
     @Provides
     fun provideOkHttp(): OkHttpClient {
-        val logging = HttpLoggingInterceptor()
-        logging.level = HttpLoggingInterceptor.Level.BODY
+        val logging = HttpLoggingInterceptor().apply {
+            level = Level.BODY
+        }
 
         val httpClient = OkHttpClient.Builder()
+
         httpClient.addInterceptor(logging)
         httpClient.addInterceptor { chain ->
             val request = chain.request().newBuilder()
-                .addHeader("apikey", "4aiHsXMQiQqNWFulrNPvJfAVxYsdoLRn")
+                .addHeader("apikey", BuildConfig.API_KEY)
                 .build()
 
             chain.proceed(request)
