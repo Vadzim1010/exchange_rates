@@ -68,7 +68,7 @@ The project implements a robust MVI pattern with the following components:
 - **UiCommand**: Represents commands sent to the UI layer for specific actions.
 - **Reducer**: Contains the logic for transitioning from one `UiState` to another based on `Event` and generates `SideEffect` or `UiCommand` if needed.
 - **MviViewModel**:
-    - Manages the state and handles `UiEvent` processing using the `Reducer`.
+    - Manages the state and handles `Event` processing using the `Reducer`.
     - Provides a `StateFlow` to observe the current state.
     - Interacts with `SideEffectHandler` to manage side effects and UI commands.
 
@@ -78,7 +78,7 @@ The project implements a robust MVI pattern with the following components:
     - Processes initial events defined by the `Reducer`.
 
 2. **State Updates**:
-    - Receives `UiEvent` and reduces it into a new `UiState` using the `Reducer`.
+    - Receives `Event` and reduces it into a new `UiState` using the `Reducer`.
     - Updates the `StateFlow` with the new state.
 
 3. **Side Effects**:
