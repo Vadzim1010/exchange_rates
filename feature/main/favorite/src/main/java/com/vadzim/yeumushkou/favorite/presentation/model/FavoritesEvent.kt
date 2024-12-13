@@ -1,11 +1,11 @@
 package com.vadzim.yeumushkou.favorite.presentation.model
 
-import com.vadzim.yeumushkou.core.presentation.mvi.UiEvent
+import com.vadzim.yeumushkou.core.presentation.mvi.Event
 import com.vadzim.yeumushkou.domain.model.FavoriteRate
 
-internal sealed interface FavoritesUiEvent : UiEvent {
+internal sealed interface FavoritesEvent : Event {
 
-    sealed interface UI : FavoritesUiEvent {
+    sealed interface UI : FavoritesEvent {
 
         data object InitForm : UI
 
@@ -16,7 +16,7 @@ internal sealed interface FavoritesUiEvent : UiEvent {
         ) : UI
     }
 
-    sealed interface Domain : FavoritesUiEvent {
+    sealed interface Domain : FavoritesEvent {
 
         data class FavoritesRatesLoaded(val result: Result<List<FavoriteRate>>) : Domain
     }

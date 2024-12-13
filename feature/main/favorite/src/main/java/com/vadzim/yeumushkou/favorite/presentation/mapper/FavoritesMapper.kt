@@ -1,4 +1,4 @@
-package com.vadzim.yeumushkou.favorite.presentation.model
+package com.vadzim.yeumushkou.favorite.presentation.mapper
 
 import com.vadzim.yeumushkou.core.presentation.state.CurrencyItemState
 import com.vadzim.yeumushkou.domain.model.FavoriteRate

@@ -2,7 +2,6 @@ package com.vadzim.yeumushkou.core.presentation.mvi.reducer
 
 import com.vadzim.yeumushkou.core.presentation.mvi.SideEffect
 import com.vadzim.yeumushkou.core.presentation.mvi.UiCommand
-import com.vadzim.yeumushkou.core.presentation.mvi.UiEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -12,7 +11,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 
 @OptIn(ExperimentalCoroutinesApi::class)
-abstract class SideEffectHandler<out Event : UiEvent, out Command : UiCommand, in Effect : SideEffect> {
+abstract class SideEffectHandler<out Event : com.vadzim.yeumushkou.core.presentation.mvi.Event, out Command : UiCommand, in Effect : SideEffect> {
 
     private val domainSideEffectFlow = MutableSharedFlow<Effect>()
     private val uiSideEffectFlow = MutableSharedFlow<Effect>()

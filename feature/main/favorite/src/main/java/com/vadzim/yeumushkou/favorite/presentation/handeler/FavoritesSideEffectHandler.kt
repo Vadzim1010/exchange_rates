@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import com.vadzim.yeumushkou.favorite.presentation.model.FavoritesSideEffect as SideEffect
 import com.vadzim.yeumushkou.favorite.presentation.model.FavoritesUiCommand as Command
-import com.vadzim.yeumushkou.favorite.presentation.model.FavoritesUiEvent as Event
+import com.vadzim.yeumushkou.favorite.presentation.model.FavoritesEvent as Event
 
 internal class FavoritesSideEffectHandler @Inject constructor(
     private val getFavoritesRatesUseCase: GetFavoritesRatesUseCase,

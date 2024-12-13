@@ -56,7 +56,7 @@ import com.vadzim.yeumushkou.main.currancies.presentation.viewmodel.CurrenciesVi
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiEvent as UiEvent
+import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesEvent.UI as UiEvent
 import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiState as UiState
 
 @Composable
@@ -159,7 +159,7 @@ internal fun CurrenciesContent(
                                 .forEach { rate ->
                                     DropdownMenuItem(
                                         text = { Text(rate) },
-                                        onClick = { eventListener(UiEvent.UI.OnSelectCurrency(rate)) },
+                                        onClick = { eventListener(UiEvent.OnSelectCurrency(rate)) },
                                         modifier = Modifier.fillMaxWidth()
                                     )
                                 }
@@ -193,7 +193,7 @@ internal fun CurrenciesContent(
                 rates.value.forEach { rate ->
                     CurrencyItem(state = rate) { state ->
                         eventListener(
-                            UiEvent.UI.OnStarClick(
+                            UiEvent.OnStarClick(
                                 baseCurrency = selectedCurrency.value,
                                 relatedCurrency = state.baseCurrency,
                                 isFavorite = state.isFavorite,

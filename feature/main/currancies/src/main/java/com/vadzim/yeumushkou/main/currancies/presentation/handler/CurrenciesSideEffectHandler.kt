@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesSideEffect as SideEffect
 import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiCommand as Command
-import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiEvent as Event
+import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesEvent as Event
 
 internal class CurrenciesSideEffectHandler @Inject constructor(
     private val getExchangeRatesUseCase: GetExchangeRatesUseCase,

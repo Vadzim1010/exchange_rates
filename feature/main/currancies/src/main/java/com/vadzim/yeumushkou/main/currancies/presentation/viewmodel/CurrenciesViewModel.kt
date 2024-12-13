@@ -7,7 +7,7 @@ import com.vadzim.yeumushkou.main.currancies.presentation.reducer.CurrenciesRedu
 import javax.inject.Inject
 import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesSideEffect as SideEffect
 import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiCommand as Command
-import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiEvent as Event
+import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesEvent as Event
 import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiState as State
 
 internal class CurrenciesViewModel @Inject constructor(

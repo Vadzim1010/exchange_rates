@@ -2,12 +2,12 @@ package com.vadzim.yeumushkou.favorite.presentation.reducer
 
 import com.vadzim.yeumushkou.core.presentation.mvi.reducer.Reducer
 import com.vadzim.yeumushkou.favorite.presentation.handeler.FavoritesSideEffectHandler
-import com.vadzim.yeumushkou.favorite.presentation.model.FavoritesUiEvent
-import com.vadzim.yeumushkou.favorite.presentation.model.map
+import com.vadzim.yeumushkou.favorite.presentation.model.FavoritesEvent
+import com.vadzim.yeumushkou.favorite.presentation.mapper.map
 import javax.inject.Inject
 import com.vadzim.yeumushkou.favorite.presentation.model.FavoritesSideEffect as SideEffect
 import com.vadzim.yeumushkou.favorite.presentation.model.FavoritesUiCommand as Command
-import com.vadzim.yeumushkou.favorite.presentation.model.FavoritesUiEvent as Event
+import com.vadzim.yeumushkou.favorite.presentation.model.FavoritesEvent as Event
 import com.vadzim.yeumushkou.favorite.presentation.model.FavoritesUiState as State
 
 internal class FavoritesReducer @Inject constructor(
@@ -18,7 +18,7 @@ internal class FavoritesReducer @Inject constructor(
         return when (event) {
             is Event.UI.InitForm -> reduceInitForm(state)
             is Event.UI.OnStarClick -> reduceOnStarClick(event, state)
-            is FavoritesUiEvent.Domain.FavoritesRatesLoaded -> reduceFavoritesRatesLoaded(event, state)
+            is FavoritesEvent.Domain.FavoritesRatesLoaded -> reduceFavoritesRatesLoaded(event, state)
         }
     }
 

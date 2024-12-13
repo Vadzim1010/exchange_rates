@@ -4,12 +4,12 @@ import com.vadzim.yeumushkou.core.presentation.mvi.reducer.Reducer
 import com.vadzim.yeumushkou.domain.model.Currency
 import com.vadzim.yeumushkou.main.currancies.presentation.handler.CurrenciesSideEffectHandler
 import com.vadzim.yeumushkou.main.currancies.presentation.mapper.map
-import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiEvent
+import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesEvent
 import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiState
 import javax.inject.Inject
 import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesSideEffect as SideEffect
 import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiCommand as Command
-import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiEvent as Event
+import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesEvent as Event
 import com.vadzim.yeumushkou.main.currancies.presentation.model.CurrenciesUiState as State
 
 internal class CurrenciesReducer @Inject constructor(
@@ -25,7 +25,7 @@ internal class CurrenciesReducer @Inject constructor(
         }
     }
 
-    override fun initialEvents(): List<CurrenciesUiEvent> {
+    override fun initialEvents(): List<CurrenciesEvent> {
         return listOf(Event.UI.InitForm)
     }
 

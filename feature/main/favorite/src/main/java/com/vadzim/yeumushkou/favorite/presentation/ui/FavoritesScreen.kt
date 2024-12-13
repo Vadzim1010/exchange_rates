@@ -29,7 +29,7 @@ import com.vadzim.yeumushkou.favorite.presentation.viewmodel.FavoritesViewModel
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import com.vadzim.yeumushkou.favorite.presentation.model.FavoritesUiEvent as UiEvent
+import com.vadzim.yeumushkou.favorite.presentation.model.FavoritesEvent.UI as UiEvent
 import com.vadzim.yeumushkou.favorite.presentation.model.FavoritesUiState as UiState
 
 @Composable
@@ -79,7 +79,7 @@ internal fun CurrenciesContent(
                 CurrencyItem(state = rate) { itemState ->
                     itemState.relatedCurrency?.let { relatedCurrency ->
                         eventListener(
-                            UiEvent.UI.OnStarClick(
+                            UiEvent.OnStarClick(
                                 baseCurrency = itemState.baseCurrency,
                                 relatedCurrency = relatedCurrency,
                                 isFavorite = itemState.isFavorite,

@@ -61,10 +61,12 @@ The project is divided into the following modules:
 The project implements a robust MVI pattern with the following components:
 
 - **UiState**: Represents the current state of the UI.
-- **UiEvent**: Represents user actions or events that need to be processed.
+- **Event**: Represents events triggered within the system, including:
+    - **User Events**: Actions initiated by the user, such as clicks or selections.
+    - **Domain Events**: Internal events representing changes in the system or results of asynchronous operations.
 - **SideEffect**: Represents side effects triggered by the application, such as navigation or API calls.
 - **UiCommand**: Represents commands sent to the UI layer for specific actions.
-- **Reducer**: Contains the logic for transitioning from one `UiState` to another based on `UiEvent` and generates `SideEffect` or `UiCommand` if needed.
+- **Reducer**: Contains the logic for transitioning from one `UiState` to another based on `Event` and generates `SideEffect` or `UiCommand` if needed.
 - **MviViewModel**:
     - Manages the state and handles `UiEvent` processing using the `Reducer`.
     - Provides a `StateFlow` to observe the current state.

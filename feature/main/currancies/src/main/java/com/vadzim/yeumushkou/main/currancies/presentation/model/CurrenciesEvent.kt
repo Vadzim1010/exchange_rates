@@ -1,11 +1,11 @@
 package com.vadzim.yeumushkou.main.currancies.presentation.model
 
-import com.vadzim.yeumushkou.core.presentation.mvi.UiEvent
+import com.vadzim.yeumushkou.core.presentation.mvi.Event
 import com.vadzim.yeumushkou.domain.model.ExchangeRates
 
-internal sealed interface CurrenciesUiEvent : UiEvent {
+internal sealed interface CurrenciesEvent : Event {
 
-    sealed interface UI : CurrenciesUiEvent {
+    sealed interface UI : CurrenciesEvent {
 
         data object InitForm : UI
 
@@ -18,7 +18,7 @@ internal sealed interface CurrenciesUiEvent : UiEvent {
         ) : UI
     }
 
-    sealed interface Domain : CurrenciesUiEvent {
+    sealed interface Domain : CurrenciesEvent {
 
         data class ExchangeRatesLoaded(val result: Result<ExchangeRates>) : Domain
     }

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vadzim.yeumushkou.core.presentation.mvi.SideEffect
 import com.vadzim.yeumushkou.core.presentation.mvi.UiCommand
-import com.vadzim.yeumushkou.core.presentation.mvi.UiEvent
+import com.vadzim.yeumushkou.core.presentation.mvi.UiState
 import com.vadzim.yeumushkou.core.presentation.mvi.reducer.Reducer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -15,15 +15,16 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import com.vadzim.yeumushkou.core.presentation.mvi.Event as MviEvent
 
-abstract class MviViewModel<UiState : com.vadzim.yeumushkou.core.presentation.mvi.UiState, Event : UiEvent, in Effect : SideEffect, Command : UiCommand>(
-    private val reducer: Reducer<UiState, Event, Effect, Command>,
+abstract class MviViewModel<State : UiState, Event : MviEvent, in Effect : SideEffect, Command : UiCommand>(
+    private val reducer: Reducer<State, Event, Effect, Command>,
 ) : ViewModel() {
 
-    val stateFlow: StateFlow<UiState> get() = mutableStateFlow.asStateFlow()
-    private val mutableStateFlow: MutableStateFlow<UiState> = MutableStateFlow(reducer.initialState())
+    val stateFlow: StateFlow<State> get() = mutableStateFlow.asStateFlow()
+    private val mutableStateFlow: MutableStateFlow<State> = MutableStateFlow(reducer.initialState())
 
-    private val state: UiState get() = mutableStateFlow.value
+    private val state: State get() = mutableStateFlow.value
 
     init {
         reducer.sideEffectHandler
@@ -50,7 +51,7 @@ abstract class MviViewModel<UiState : com.vadzim.yeumushkou.core.presentation.mv
 
     abstract fun handleUiCommand(command: Command)
 
-    private fun updateState(state: UiState) {
+    private fun updateState(state: State) {
         mutableStateFlow.tryEmit(state)
     }
 
