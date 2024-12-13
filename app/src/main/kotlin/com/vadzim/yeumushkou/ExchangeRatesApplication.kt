@@ -7,6 +7,7 @@ import com.vadzim.yeumushkou.core.di.deps.HasComponentDependencies
 import com.vadzim.yeumushkou.di.AppComponent
 import com.vadzim.yeumushkou.di.DaggerAppComponent
 
+// TODO вынести всё лишнее из App module
 internal class ExchangeRatesApplication : Application(), HasComponentDependencies {
 
     override val dependencies: ComponentDependenciesProvider
