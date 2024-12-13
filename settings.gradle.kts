@@ -11,6 +11,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -19,6 +20,16 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Exchange rates"
+rootProject.name = "Exchange Rates"
 include(":app")
- 
+include(":data")
+include(":domain")
+
+//core
+include(":core:common")
+include(":core:network")
+
+// feature
+include(":feature:main:root")
+include(":feature:main:currancies")
+include(":feature:main:favorite")

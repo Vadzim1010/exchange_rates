@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/currenciesFragment">
+
+    <fragment
+        android:id="@+id/currenciesFragment"
+        android:name="com.vadzim.yeumushkou.main.currancies.presentation.ui.CurrenciesFragment" >
+        <action
+            android:id="@+id/action_currenciesFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.vadzim.yeumushkou.favorite.presentation.ui.FavoritesFragment">
+        <action
+            android:id="@+id/action_favoritesFragment_to_currenciesFragment"
+            app:destination="@id/currenciesFragment" />
+    </fragment>
+
+</navigation>
