@@ -9,9 +9,10 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import com.vadzim.yeumushkou.core.presentation.mvi.Event as MviEvent
 
 @OptIn(ExperimentalCoroutinesApi::class)
-abstract class SideEffectHandler<out Event : com.vadzim.yeumushkou.core.presentation.mvi.Event, out Command : UiCommand, in Effect : SideEffect> {
+abstract class SideEffectHandler<out Event : MviEvent, out Command : UiCommand, in Effect : SideEffect> {
 
     private val domainSideEffectFlow = MutableSharedFlow<Effect>()
     private val uiSideEffectFlow = MutableSharedFlow<Effect>()
